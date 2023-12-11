@@ -1,0 +1,12 @@
+# Docker Workstation with X11
+# DinD, KinD, Kubectl, Kustomize, Helm, wget, curl, jq, Skopeo, Firefox
+
+# docker-compose build
+docker-compose build --progress=plain --build-arg MYUID=$(id -u)
+
+# Allow X11 Forward
+xhost +SI:localuser:$USER
+
+# Run the bastion Docker Workstation
+docker-compose up -d
+

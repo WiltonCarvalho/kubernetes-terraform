@@ -1,0 +1,54 @@
+apiVersion: autoscaling/v2
+kind: HorizontalPodAutoscaler
+metadata:
+  name: demo-app-hpa
+  namespace: default
+  labels:
+    app: demo-app-hpa
+spec:
+  scaleTargetRef:
+    kind: Deployment
+    name: demo-app
+    apiVersion: apps/v1
+  minReplicas: 1
+  maxReplicas: 4
+  metrics:
+    - type: Pods
+      pods:
+        metric:
+          name: sum_http_server_requests_seconds_count_filted
+        target:
+          type: AverageValue
+          averageValue: 20m
+  behavior:
+    scaleDown:
+      stabilizationWindowSeconds: 10
+      policies:
+      - type: Pods
+        value: 2
+        periodSeconds: 2
+    scaleUp:
+      stabilizationWindowSeconds: 10
+      policies:
+      - type: Pods
+        value: 2
+        periodSeconds: 2
+      selectPolicy: Max
+
+
+# while true; do curl -fsSL demo-app.172.19.0.1.sslip.io; done
+
+### Spring Actutator Requests
+# kubectl get --raw "/apis/custom.metrics.k8s.io/v1beta1/namespaces/default/pods/*/sum_http_server_requests_seconds_count_filted?labelSelector=app=demo-app" | jq .
+
+
+### ArgoCD Application
+# spec:
+#   ignoreDifferences:
+#   - group: apps
+#     kind: Deployment
+#     jsonPointers:
+#     - /spec/replicas
+
+### Nginx Ingress Requests
+# kubectl get --raw "/apis/custom.metrics.k8s.io/v1beta1/namespaces/monitoring/services/*/nginx_ingress_controller_requests"

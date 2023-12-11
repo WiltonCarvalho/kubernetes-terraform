@@ -1,0 +1,12 @@
+app:
+  ingress:
+    enabled: false
+metrics-server:
+  enabled: false
+metricsScraper:
+  enabled: true
+cert-manager:
+  enabled: false
+  installCRDs: false
+nginx:
+  enabled: false
