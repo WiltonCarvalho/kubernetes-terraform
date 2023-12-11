@@ -31,5 +31,5 @@ EOF
   rm -f /var/run/docker.pid
   rm -f /tmp/nohup.out
   cd /tmp
-  dockerd --insecure-registry=registry.172.19.255.201.sslip.io
+  nohup dockerd --insecure-registry=registry.172.19.255.201.sslip.io &
 )
