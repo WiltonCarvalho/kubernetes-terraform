@@ -19,7 +19,7 @@ docker tag demo-app:latest localhost:32000/demo-app:latest
 docker push localhost:32000/demo-app:latest
 
 # Deploy Demo App
-kubectl apply -f deployment.yaml
+kubectl apply -f deployment-javaagent.yaml
 kubectl logs deployments/demo-app -f
 
 # Test
