@@ -5,7 +5,7 @@ server:
   ingress:
     enabled: true
     hosts:
-      - 172.19.0.1.sslip.io
+      - 172.19.255.250.sslip.io
     paths:
       - /argocd
     pathType: Prefix
@@ -13,7 +13,7 @@ server:
     ingressClassName: nginx-private
     tls:
       - hosts:
-        - 172.19.0.1.sslip.io
+        - 172.19.255.250.sslip.io
         secretName: test-cert-2023
 configs:
   params:
@@ -21,7 +21,7 @@ configs:
     server.rootpath: /argocd
     server.staticassets: /argocd/shared/app
   cm:
-    url: "https://172.19.0.1.sslip.io/argocd"
+    url: "https://172.19.255.250.sslip.io/argocd"
     admin.enabled: true
     exec.enabled: true
     # kubectl -n argocd patch secrets argocd-secret --patch "{\"data\":{\"dex.ldap.bindPW\":\"$(echo 'xxxx' | base64 -w 0)\"}}"
@@ -70,7 +70,7 @@ configs:
       p, role:org-admin, repositories, delete, *, allow
       p, role:org-admin, logs, get, *, allow
       p, role:org-admin, exec, create, */*, allow
-      g, Ges_Corp_Argocd_Admin, role:org-admin
+      g, devops, role:org-admin
       p, role:readonly, applications, get, */*, allow
       p, role:readonly, logs, get, *, allow
       p, role:readexecute, applications, get, */*, allow
@@ -79,7 +79,7 @@ configs:
       p, role:readexecute, applications, delete, default/hml-*, allow
       p, role:readexecute, logs, get, *, allow
       p, role:readexecute, exec, create, */*, allow
-      g, Ges_Corp_Argocd_R, role:readexecute
+      g, developers, role:readexecute
     scopes: '[groups, sAMAccountName]'
   ssh:
     knownHosts: |

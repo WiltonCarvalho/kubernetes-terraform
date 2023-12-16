@@ -54,16 +54,6 @@ spec:
           value: "false"
         image: localhost:32000/demo-app:latest
         imagePullPolicy: Always
-        livenessProbe:
-          failureThreshold: 3
-          httpGet:
-            path: /actuator/health
-            port: management
-            scheme: HTTP
-          initialDelaySeconds: 30
-          periodSeconds: 10
-          successThreshold: 1
-          timeoutSeconds: 1
         name: spring-app
         ports:
         - containerPort: 8080
@@ -72,13 +62,30 @@ spec:
         - containerPort: 8081
           name: management
           protocol: TCP
+        startupProbe:
+          failureThreshold: 12
+          httpGet:
+            path: /actuator/health
+            port: management
+            scheme: HTTP
+          periodSeconds: 10
+          successThreshold: 1
+          timeoutSeconds: 1
         readinessProbe:
           failureThreshold: 3
           httpGet:
             path: /actuator/health
             port: management
             scheme: HTTP
-          initialDelaySeconds: 30
+          periodSeconds: 10
+          successThreshold: 1
+          timeoutSeconds: 1
+        livenessProbe:
+          failureThreshold: 5
+          httpGet:
+            path: /actuator/health
+            port: management
+            scheme: HTTP
           periodSeconds: 10
           successThreshold: 1
           timeoutSeconds: 1
@@ -120,7 +127,7 @@ metadata:
 spec:
   ingressClassName: nginx-private
   rules:
-  - host: demo-app.172.19.0.1.sslip.io
+  - host: demo-app.172.19.255.250.sslip.io
     http:
       paths:
       - backend:

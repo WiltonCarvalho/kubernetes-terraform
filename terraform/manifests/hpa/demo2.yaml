@@ -1,0 +1,24 @@
+kind: HorizontalPodAutoscaler
+apiVersion: autoscaling/v2
+metadata:
+  name: demo-app-hpa
+  namespace: default
+  labels:
+    app: demo-app-hpa
+spec:
+  scaleTargetRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: demo-app
+  minReplicas: 1
+  maxReplicas: 4
+  metrics:
+  - type: Object
+    object:
+      target:
+        kind: Service
+        name: demo-app
+      metricName: nginx_ingress_controller_requests
+      targetValue: 100m
+
+# kubectl get --raw "/apis/custom.metrics.k8s.io/v1beta1/namespaces/default/services/*/nginx_ingress_controller_requests"

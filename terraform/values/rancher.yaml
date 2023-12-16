@@ -1,4 +1,4 @@
-hostname: rancher.172.19.0.1.sslip.io
+hostname: rancher.172.19.255.250.sslip.io
 bootstrapPassword: admin
 replicas: 1
 ingress:

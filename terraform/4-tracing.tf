@@ -35,27 +35,3 @@ resource "kubernetes_manifest" "otel-collector-svc" {
     kubernetes_namespace.otel
   ]
 }
-
-// locals {
-//   yamls = [for data in split("---", data.http.crd.body): yamldecode(data)]
-// }
-
-// resource "kubernetes_manifest" "install-crd" {
-//   count = length(local.yamls)
-//   manifest = local.yamls[count.index]
-// }
-
-// data "kubernetes_resources" "prometheus-operator" {
-//   api_version = "apiextensions.k8s.io/v1"
-//   kind = "CustomResourceDefinition"
-//   field_selector = "metadata.name==prometheuses.monitoring.coreos.com"
-// }
-
-// resource "kubernetes_manifest" "service-monitors" {
-//   for_each = fileset("", "manifests/service-monitors/*.yaml")
-//   manifest = yamldecode(file(each.value))
-//   depends_on = [
-//     data.kubernetes_namespace.monitoring,
-//     data.kubernetes_resources.prometheus-operator
-//   ]
-// }

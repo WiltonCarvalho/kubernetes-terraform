@@ -115,14 +115,14 @@ grafana:
     path: /grafana/?(.*)
     pathType: Prefix
     hosts:
-      - 172.19.0.1.sslip.io
+      - 172.19.255.250.sslip.io
     tls:
       - hosts:
-        - 172.19.0.1.sslip.io
+        - 172.19.255.250.sslip.io
         secretName: test-cert-2023
   grafana.ini:
     server:
-      domain: 172.19.0.1.sslip.io
+      domain: 172.19.255.250.sslip.io
       root_url: "%(protocol)s://%(domain)s:%(http_port)s/grafana/"
       # serve_from_sub_path: true
     auth.ldap:
