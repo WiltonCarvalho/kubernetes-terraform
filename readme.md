@@ -5,7 +5,7 @@ docker info
 
 ### Setup KinD ###
 ```
-kind create cluster --image kindest/node:v1.26.2 --config kind-config.yaml
+kind create cluster --image kindest/node:v1.27.10 --config kind-config.yaml
 ```
 
 ### MetalLB ###

@@ -10,3 +10,9 @@ xhost +SI:localuser:$USER
 # Run the bastion Docker Workstation
 docker-compose up -d
 
+# opt: docker run
+docker run -it --rm --name bastion-host --hostname bastion-host  --privileged \
+  -v $PWD:/work -w /work \
+  -e DISPLAY=$DISPLAY -e NO_AT_BRIDGE=1 \
+  -v /tmp/.X11-unix:/tmp/.X11-unix \
+  --device /dev/snd bastion-host
