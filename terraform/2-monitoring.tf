@@ -5,7 +5,13 @@ kubectl create ns monitoring
   cd /tmp
   echo > .rnd
   openssl req -new -nodes -x509 -subj '/O=TestCert/CN=172.19.0.1.sslip.io' \
-    -days 3650 -keyout test-cert.key -out test-cert.crt -extensions v3_ca
+    -days 3650 -keyout test-cert.key -out test-cert.crt \
+    -addext "extendedKeyUsage=serverAuth,clientAuth" \
+    -addext "basicConstraints=CA:FALSE" \
+    -addext "keyUsage=nonRepudiation,digitalSignature,keyEncipherment" \
+    -addext "subjectAltName=IP:127.0.0.1,DNS:localhost" \
+    -addext "subjectKeyIdentifier=hash" \
+    -addext "authorityKeyIdentifier=keyid,issuer"
 )
 
 kubectl -n monitoring create secret tls test-cert-2023 \
